@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,102 +7,93 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
+
     body {
-      background: #f4f4f4;
+      background: linear-gradient(135deg, #e0ffe0, #f0fff0);
       display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #009900;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-    .container {
-      background: #ffffff;
+
+    .logo {
+      height: 50px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+    }
+
+    .welcome {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    main {
+      flex: 1;
       padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-      animation: fadeIn 1s ease;
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      animation: fadeIn 1s ease-in;
     }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #009900;
+      color: white;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-    .logo {
-      max-width: 200px;
-      margin-bottom: 1rem;
-      animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
-    input[type="password"] {
-      padding: 0.8rem;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-    }
-    button {
-      padding: 0.8rem;
-      width: 100%;
-      background-color: #009900;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background-color: #007a00;
-    }
-    .message {
-      margin-top: 1rem;
-      font-weight: bold;
-    }
-    .loading-page {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .spinner {
-      margin-top: 1rem;
-      width: 40px;
-      height: 40px;
-      border: 4px solid #ccc;
-      border-top-color: #009900;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
   <div class="container" id="login-box">
-    <img src="WhatsApp Image 2025-05-10 at 2.28.25 AM.jpeg" alt="FELÍCIO TIPS Logo" class="logo" />
-    <h2>Enter Access Code</h2>
-    <input type="password" id="password" placeholder="Enter password..." />
-    <button onclick="checkPassword()">Login</button>
+    <img src="WhatsApp Image 2025-05-10 at 2.28.25 AM.jpeg" alt="Logo FELÍCIO TIPS" class="logo" />
+    <h2>Digite o Código de Acesso</h2>
+    <input type="password" id="password" placeholder="Digite a senha..." />
+    <button onclick="checkPassword()">Entrar</button>
     <div class="message" id="message"></div>
   </div>
 
   <div class="container loading-page" id="loading-box">
-    <img src="WhatsApp Image 2025-05-10 at 2.28.25 AM.jpeg" alt="FELÍCIO TIPS Logo" class="logo" />
-    <h2>Access Confirmed</h2>
-    <p>Loading your dashboard...</p>
+    <img src="WhatsApp Image 2025-05-10 at 2.28.25 AM.jpeg" alt="Logo FELÍCIO TIPS" class="logo" />
+    <h2>Acesso Confirmado</h2>
+    <p>Carregando seu painel...</p>
     <div class="spinner"></div>
   </div>
 
@@ -116,22 +107,22 @@
       const responses = {
         "V!P2025#Ace": true,
         "Fel#D1n8sS": true,
-        "S3cur3#W1n$": "Please get a new code as this has already expired.",
-        "V1P_EntRy#77": "Please try logging in again, something went wrong :(",
-        "W!nn3rZ0n3!": "Please confirm your code is completely activated before trying again."
+        "S3cur3#W1n$": "Por favor, obtenha um novo código, pois este já expirou.",
+        "V1P_EntRy#77": "Tente fazer login novamente, algo deu errado :(",
+        "W!nn3rZ0n3!": "Confirme se seu código está completamente ativado antes de tentar novamente."
       };
 
       if (responses[pwd] === true) {
         loginBox.style.display = "none";
         loadingBox.style.display = "flex";
         setTimeout(() => {
-          window.location.href = "dashboard.html"; // You can create this page separately
+          window.location.href = "dashboard.html";
         }, 5500);
       } else if (responses[pwd]) {
         message.textContent = responses[pwd];
         message.style.color = "#cc0000";
       } else {
-        message.textContent = "Incorrect password. Please try again.";
+        message.textContent = "Senha incorreta. Tente novamente.";
         message.style.color = "#cc0000";
       }
     }

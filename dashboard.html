@@ -71,6 +71,7 @@
     .card a {
       text-decoration: none;
       color: inherit;
+      display: block;
     }
 
     footer {
@@ -84,26 +85,42 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .welcome {
+        margin-top: 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="/WhatsApp Image 2025-05-10 at 2.28.25 AM.jpeg" alt="Logo" class="logo" />
+    <img src="WhatsApp Image 2025-05-10 at 2.28.25 AM.jpeg" alt="Logo" class="logo" />
     <div class="welcome">Bem-vindo ao Painel FELÍCIO TIPS</div>
   </header>
 
   <main>
     <div class="card">
-      <h3>Previsões Recentes</h3>
-      <p>Confira as principais dicas de apostas e análises dos jogos de hoje.</p>
+      <a href="lock.html">
+        <h3>Previsões Recentes</h3>
+        <p>Confira as principais dicas de apostas e análises dos jogos de hoje.</p>
+      </a>
     </div>
     <div class="card">
-      <h3>Informações da Conta</h3>
-      <p>Veja os detalhes da sua assinatura e o status de ativação.</p>
+      <a href="lock.html">
+        <h3>Informações da Conta</h3>
+        <p>Veja os detalhes da sua assinatura e o status de ativação.</p>
+      </a>
     </div>
     <div class="card">
-      <h3>Suporte</h3>
-      <p>Precisa de ajuda? Entre em contato com a administração ou fale com o suporte.</p>
+      <a href="lock.html">
+        <h3>Suporte</h3>
+        <p>Precisa de ajuda? Entre em contato com a administração ou fale com o suporte.</p>
+      </a>
     </div>
     <div class="card">
       <a href="lock.html">

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FELÍCIO TIPS - Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
@@ -30,8 +30,14 @@
       animation: fadeIn 1s ease;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     .logo {
       max-width: 200px;
@@ -39,11 +45,17 @@
       animation: float 3s ease-in-out infinite;
     }
     @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0);
+      }
     }
-    input[type="password"] {
+    input[type='password'] {
       padding: 0.8rem;
       width: 100%;
       border: 1px solid #ccc;
@@ -64,6 +76,10 @@
     }
     button:hover {
       background-color: #007a00;
+    }
+    button:disabled {
+      background-color: #999999;
+      cursor: not-allowed;
     }
     .message {
       margin-top: 1rem;
@@ -86,7 +102,27 @@
       animation: spin 1s linear infinite;
     }
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Estilos da mensagem pendente */
+    .pending-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: #cc9900;
+      font-weight: bold;
+    }
+    .pending-spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #ccc;
+      border-top-color: #cc9900;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
   </style>
 </head>
@@ -108,31 +144,55 @@
 
   <script>
     function checkPassword() {
-      const pwd = document.getElementById("password").value.trim();
-      const message = document.getElementById("message");
-      const loginBox = document.getElementById("login-box");
-      const loadingBox = document.getElementById("loading-box");
+      const pwdInput = document.getElementById('password');
+      const message = document.getElementById('message');
+      const loginBox = document.getElementById('login-box');
+      const loadingBox = document.getElementById('loading-box');
+      const button = loginBox.querySelector('button');
 
       const responses = {
-        "V!P2025#Ace": true,
-        "Fel#D1n8sS": true,
-        "S3cur3#W1n$": "Por favor, obtenha um novo código, pois este já expirou.",
-        "V1P_EntRy#77": "Tente fazer login novamente, algo deu errado :(",
-        "W!nn3rZ0n3!": "Confirme se seu código está completamente ativado antes de tentar novamente."
+        'V!P2025#Ace': true,
+        'Fel#D1n8sS': true,
+        'S3cur3#W1n$': 'Por favor, obtenha um novo código, pois este já expirou.',
+        'V1P_EntRy#77': 'Tente fazer login novamente, algo deu errado :(',
+        'W!nn3rZ0n3!': 'Por favor, confirme se seu código está completamente ativado antes de tentar novamente.',
+        'Fel@D2n8s7': 'pendente'
       };
 
+      const pwd = pwdInput.value.trim();
+
       if (responses[pwd] === true) {
-        loginBox.style.display = "none";
-        loadingBox.style.display = "flex";
+        // Login bem-sucedido - redirecionar
+        message.textContent = '';
+        pwdInput.disabled = false;
+        button.disabled = false;
+        loginBox.style.display = 'none';
+        loadingBox.style.display = 'flex';
         setTimeout(() => {
-          window.location.href = "dashboard.html";
+          window.location.href = 'dashboard.html';
         }, 5500);
+      } else if (responses[pwd] === 'pendente') {
+        // Estado pendente - desabilitar input e botão, mostrar mensagem com spinner
+        pwdInput.disabled = true;
+        button.disabled = true;
+        message.innerHTML = `
+          <div class="pending-message">
+            <div class="pending-spinner"></div>
+            <span>Login pendente... Aguardando confirmação da gerência. Por favor, seja paciente ou entre em contato com a gerência.</span>
+          </div>
+        `;
       } else if (responses[pwd]) {
+        // Erro conhecido
+        pwdInput.disabled = false;
+        button.disabled = false;
         message.textContent = responses[pwd];
-        message.style.color = "#cc0000";
+        message.style.color = '#cc0000';
       } else {
-        message.textContent = "Senha incorreta. Tente novamente.";
-        message.style.color = "#cc0000";
+        // Senha incorreta
+        pwdInput.disabled = false;
+        button.disabled = false;
+        message.textContent = 'Senha incorreta. Tente novamente.';
+        message.style.color = '#cc0000';
       }
     }
   </script>
